@@ -1,36 +1,44 @@
-# Pemograman-Visual
+# Profile Mahasiswa (Pertemuan 2 - Komponen Visual)
 
-Pengumpulan Pertemuan Praktikum Pemograman-Visual
+Deskripsi
 
-# Pertemuan 2-Komponen Visual
-Project: Profile Mahasiswa (Pertemuan2 - Komponen Visual)
-Ringkasan
-•	Aplikasi Windows Forms sederhana untuk memasukkan data mahasiswa (Nama, NIM, KOM) dan menampilkan data tersebut lewat MessageBox.
-Perubahan / Fitur yang dibuat
-•	Form1 dengan kontrol:
-•	Label + TextBox untuk Nama (lblNama, txtNama)
-•	Label + TextBox untuk NIM (lblNIM, txtNIM)
-•	Label + TextBox untuk KOM (lblKOM, txtKOM)
-•	Tombol Tampilkan (btnTampilkan): menampilkan MessageBox berisi Nama, NIM, KOM
-•	Tombol Hapus (txtHapus): mengosongkan semua TextBox
-•	Tombol Keluar (btnKeluar): menutup form
-•	Event handlers di Form1.vb:
-•	btnTampilkan_Click: membentuk dan menampilkan pesan
-•	txtHapus_Click: Clear() pada txtNama, txtNIM, txtKOM
-•	btnKeluar_Click: Me.Close()
-•	Ada handler kosong untuk txtNama.TextChanged dan Form1.Load
+Aplikasi Windows Forms sederhana untuk memasukkan data mahasiswa (Nama, NIM, KOM) dan menampilkan data tersebut lewat MessageBox.
+
+Fitur
+
+- Form input untuk:
+  - Nama (txtNama)
+  - NIM (txtNIM)
+  - KOM (txtKOM)
+- Tombol:
+  - Tampilkan (btnTampilkan) — menampilkan MessageBox berisi Nama, NIM, KOM
+  - Hapus (txtHapus) — mengosongkan semua TextBox
+  - Keluar (btnKeluar) — menutup aplikasi
+
 File utama
-•	Pertemuan2-Komponen Visual\Form1.vb
-•	Pertemuan2-Komponen Visual\Form1.Designer.vb
-•	Pertemuan2-Komponen Visual\Form1.resx
+
+- Pertemuan2-Komponen Visual/Form1.vb
+- Pertemuan2-Komponen Visual/Form1.Designer.vb
+- Pertemuan2-Komponen Visual/Form1.resx
+
 Cara menjalankan
-•	Buka Pertemuan2-Komponen Visual.slnx di Visual Studio
-•	Build lalu jalankan (F5)
+
+1. Buka `Pertemuan2-Komponen Visual.slnx` di Visual Studio.
+2. Build lalu jalankan (F5).
+
 Contoh penggunaan
-1.	Isi Nama, NIM, KOM pada bidang masing-masing.
-2.	Klik "Tampilkan" untuk melihat data di MessageBox.
-3.	Klik "Hapus" untuk mengosongkan input, atau "Keluar" untuk menutup aplikasi.
+
+1. Isi Nama, NIM, KOM pada kolom masing-masing.
+2. Klik "Tampilkan" untuk melihat data di MessageBox.
+3. Klik "Hapus" untuk mengosongkan input.
+4. Klik "Keluar" untuk menutup aplikasi.
+
 Catatan / TODO
-•	Tambahkan validasi input (kosong, format NIM).
-•	Ganti nama kontrol tombol "txtHapus" menjadi btnHapus untuk konsistensi.
-•	Pertimbangkan menampilkan data di form (labels) alih-alih MessageBox jika ingin pengembangan lebih lanjut.
+
+- Ubah nama kontrol `txtHapus` menjadi `btnHapus` agar konsisten.
+- Tambahkan validasi input (cek kosong dan format NIM).
+- Pertimbangkan menampilkan data langsung di form (mis. Label atau List) jika ingin pengembangan lebih lanjut.
+
+Lisensi
+
+Proyek ini milik penulis. Sesuaikan lisensi bila ingin membagikan publik.
