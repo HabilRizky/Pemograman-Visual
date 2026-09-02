@@ -38,7 +38,3 @@ Catatan / TODO
 - Ubah nama kontrol `txtHapus` menjadi `btnHapus` agar konsisten.
 - Tambahkan validasi input (cek kosong dan format NIM).
 - Pertimbangkan menampilkan data langsung di form (mis. Label atau List) jika ingin pengembangan lebih lanjut.
-
-Lisensi
-
-Proyek ini milik penulis. Sesuaikan lisensi bila ingin membagikan publik.
