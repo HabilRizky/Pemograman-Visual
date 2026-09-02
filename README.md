@@ -148,13 +148,3 @@ End Sub
 **Cara memastikan gambar bisa tampil saat dijalankan:** folder `Assets` (berisi `1.jpg`, `2.jpg`, `3.jpg`) harus ikut ter-copy ke folder output build (`bin\Debug\net...\`) setiap kali project di-build, karena path `"Assets\1.jpg"` di atas bersifat relatif. Di Visual Studio, klik kanan file gambar di folder Assets → Properties → set **Copy to Output Directory** menjadi **Copy if newer** agar ini otomatis terjadi.
 
 Catatan menjalankan: pastikan folder Assets berisi 1.jpg, 2.jpg, 3.jpg. Buka Pertemuan3.slnx di Visual Studio, jalankan (F5).
-
----
-
-Lisensi
--------
-Proyek ini milik penulis. Sesuaikan lisensi bila ingin membagikan publik.
-
-Footer
-------
-Pemrograman Visual • Visual Basic .NET Windows Forms
