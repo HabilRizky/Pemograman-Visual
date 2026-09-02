@@ -34,7 +34,10 @@ File utama:
 
 Cara menjalankan: buka `Pertemuan2-Komponen Visual.slnx` di Visual Studio, build lalu jalankan (F5).
 
-TODO: ubah nama kontrol `txtHapus` menjadi `btnHapus` agar konsisten, tambahkan validasi input (cek kosong dan format NIM).
+TODO:
+- Ubah nama kontrol `txtHapus` menjadi `btnHapus` agar konsisten.
+- Tambahkan validasi input (cek kosong dan format NIM).
+- Pertimbangkan menampilkan data langsung di form (mis. Label atau List) jika ingin pengembangan lebih lanjut.
 
 ---
 
