@@ -1,9 +1,15 @@
+# Visual Studio / .NET gitignore
 .vs/
 bin/
 obj/
+**/bin/
+**/obj/
 Debug/
 Release/
 *.user
 *.suo
 *.rsuser
 .vscode/
+*.userosscache
+*.sln.docstates
+*.userprefs
