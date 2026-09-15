@@ -14,6 +14,7 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
 | **Pertemuan 02** | Form Input Profile Mahasiswa (Nama, NIM, KOM), Event Handling Tombol, `MessageBox`, & Pengelolaan Properti Kontrol. | Selesai | 📖 [Dokumentasi Pertemuan 2](./Pertemuan2-Komponen%20Visual/README.md) |
 | **Pertemuan 03** | Validasi Input Angka (`KeyPress` & `TryParse`), Pengkondisian `If...ElseIf`, & Visualisasi Gambar Dinamis (`PictureBox`). | Selesai | 📖 [Dokumentasi Pertemuan 3](./Pertemuan3/README.md) |
 | **Pertemuan 04** | Perulangan (`For...Next`), Pemrosesan Batas Awal-Akhir, & Pencetakan Deret Angka pada Kontrol `ListBox`. | Selesai | 📖 [Dokumentasi Pertemuan 4](./Pertemuan4-Perulangan/README.md) |
+| **Pertemuan 05** | Modul (`Module`) & Fungsi (`Function`) Terpisah, serta Array Satu Dimensi & Dua Dimensi (`nilai2D`). | Selesai | 📖 [Dokumentasi Pertemuan 5](./Pertemuan5-Modul-Fungi-Array/README.md) |
 | **Tugas 01** | Aplikasi Multi-Form: Autentikasi Login (Staff/Manager), Avatar Dynamic Role, & Perhitungan Pajak Bertingkat. | Selesai | 📖 [Dokumentasi Tugas 1](./Tugas1_241712030_HabilRizkyTazir/README.md) |
 
 ---
@@ -47,7 +48,12 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
 - Memilih struktur perulangan `For i As Integer = nilaiAwal To nilaiAkhir`.
 - Menampilkan deret angka perulangan ke dalam kontrol `ListBox` (`lstHasil.Items.Add(i)`).
 
-### 📌 5. Tugas 1 — Autentikasi Login & Perhitungan Pajak
+### 📌 5. Pertemuan 5 — Modul, Fungsi, dan Array
+- Memisahkan logika data ke dalam sebuah `Module` tersendiri (`ModArray`), berbeda dari `Class` karena isinya otomatis `Public`/global tanpa perlu instansiasi objek.
+- Membedakan `Sub` (tidak mengembalikan nilai) dengan `Function` (mengembalikan nilai lewat `Return`) melalui contoh `hitung(panjang, lebar)` yang menghitung luas atau keliling tergantung kondisi.
+- Mendeklarasikan dan mengakses **Array 1 Dimensi** (`nilai()`) dan **Array 2 Dimensi/matriks** (`nilai2D(,)`), termasuk cara pengambilan elemen lewat index baris & kolom.
+
+### 📌 6. Tugas 1 — Autentikasi Login & Perhitungan Pajak
 - **Multi-Form Navigation**: Transisi form dari `frmLogin` menuju `FrmPajak`.
 - **Dynamic Role Asset**: Pilihan `ComboBox` (`Staff` / `Manager`) mengubah avatar `PictureBox`.
 - **Validasi Multi-Karakter**: `txtNama` hanya huruf, `txtNim` & `txtPendapatan` hanya angka.
