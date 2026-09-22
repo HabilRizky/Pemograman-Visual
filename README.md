@@ -16,12 +16,14 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
 | **Pertemuan 04** | Perulangan (`For...Next`), Pemrosesan Batas Awal-Akhir, & Pencetakan Deret Angka pada Kontrol `ListBox`. | Selesai | 📖 [Dokumentasi Pertemuan 4](./Pertemuan4-Perulangan/README.md) |
 | **Pertemuan 05** | Modul (`Module`) & Fungsi (`Function`) Terpisah, serta Array Satu Dimensi & Dua Dimensi (`nilai2D`). | Selesai | 📖 [Dokumentasi Pertemuan 5](./Pertemuan5-Modul-Fungi-Array/README.md) |
 | **Tugas 01** | Aplikasi Multi-Form: Autentikasi Login (Staff/Manager), Avatar Dynamic Role, & Perhitungan Pajak Bertingkat. | Selesai | 📖 [Dokumentasi Tugas 1](./Tugas1_241712030_HabilRizkyTazir/README.md) |
+| **Pertemuan 06** | Integrasi Database PostgreSQL (Npgsql & Supabase), File Konfigurasi `appsettings.json`, Modular Data Layer, & Tampilan `DataGridView`. | Selesai | 📖 [Dokumentasi Pertemuan 6](./Pertemuan6-database/README.md) |
 
 ---
 
 ## 🛠️ Teknologi & Tools
 - **Bahasa Pemrograman**: Visual Basic .NET (VB.NET)
 - **Framework**: .NET 8.0 / Windows Forms App (WinForms)
+- **Database Driver**: PostgreSQL (`Npgsql`) & `Microsoft.Extensions.Configuration`
 - **IDE**: Microsoft Visual Studio 2022
 - **Version Control**: Git & GitHub
 
@@ -62,6 +64,15 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
   - $\le \text{Rp } 30.000.000 \longrightarrow 10\%$
   - $\le \text{Rp } 100.000.000 \longrightarrow 20\%$
   - $> \text{Rp } 100.000.000 \longrightarrow 30\%$
+
+### 📌 6. Pertemuan 6 — Integrasi Database PostgreSQL
+- **Konfigurasi JSON**: Pembacaan Connection String secara eksternal melalui `appsettings.json` dan `ConfigurationBuilder`.
+- **Driver Database**: Menggunakan Npgsql ADO.NET Data Provider untuk PostgreSQL / Supabase.
+- **Modular Data Architecture**:
+  - `ModDatabase`: Penanganan koneksi awal.
+  - `ModFunction`: Helper generic `AmbilData` (`DataTable`) dan `EksekusiData` (*Parameterized Query*).
+  - `ModQuery`: Abstraksi query bisnis (`TambahData` & `TampilkanData`).
+- **Penyajian Data**: Menampilkan hasil query `SELECT` pada kontrol `DataGridView` (`dgvMahasiswa.DataSource`).
 
 ---
 

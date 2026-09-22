@@ -24,9 +24,8 @@
         Dim nama As String = txtNama.Text.Trim()
         Dim nim As String = txtNim.Text.Trim()
 
-        Dim valid As Boolean =
-            (role = "Manager" AndAlso nama = "Habil" AndAlso nim = "241712030") OrElse
-            (role = "Staff" AndAlso nama = "Reza" AndAlso nim = "241712010")
+        Dim valid As Boolean = (role = "Manager" AndAlso nama = "Habil" AndAlso nim = "241712030") OrElse
+                        (role = "Staff" AndAlso nama = "Reza" AndAlso nim = "241712010")
 
         If Not valid Then
             MessageBox.Show("Role, Nama, atau NIM tidak sesuai!", "Login Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error)
