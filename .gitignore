@@ -1,9 +1,4 @@
 
-.vs/
-bin/
-obj/
-*.user
-=======
 # Visual Studio / .NET gitignore
 .vs/
 bin/
@@ -13,9 +8,11 @@ obj/
 Debug/
 Release/
 *.user
+*.user.*
 *.suo
 *.rsuser
 .vscode/
 *.userosscache
 *.sln.docstates
 *.userprefs
+

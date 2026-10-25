@@ -17,6 +17,9 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
 | **Pertemuan 05** | Modul (`Module`) & Fungsi (`Function`) Terpisah, serta Array Satu Dimensi & Dua Dimensi (`nilai2D`). | Selesai | 📖 [Dokumentasi Pertemuan 5](./Pertemuan5-Modul-Fungi-Array/README.md) |
 | **Tugas 01** | Aplikasi Multi-Form: Autentikasi Login (Staff/Manager), Avatar Dynamic Role, & Perhitungan Pajak Bertingkat. | Selesai | 📖 [Dokumentasi Tugas 1](./Tugas1_241712030_HabilRizkyTazir/README.md) |
 | **Pertemuan 06** | Integrasi Database PostgreSQL (Npgsql & Supabase), File Konfigurasi `appsettings.json`, Modular Data Layer, & Tampilan `DataGridView`. | Selesai | 📖 [Dokumentasi Pertemuan 6](./Pertemuan6-database/README.md) |
+| **Pertemuan 07** | Form Pendaftaran Mahasiswa, Validasi Input Berlapis (`ErrorProvider`), Pencegahan Duplikasi, & Studi Komparasi Konversi Tipe Data. | Selesai | 📖 [Dokumentasi Pertemuan 7](./FormPendaftaran/README.md) |
+| **Tugas 02** | Aplikasi Peminjaman Buku Perpustakaan: Validasi Pola Kode Buku (`BKxxxx`), Cek Duplikasi Pinjam, Hitung Jatuh Tempo, & Ekspor CSV. | Selesai | 📖 [Dokumentasi Tugas 2](./PeminjamanBuku/README.md) |
+| **Pertemuan 08** | Data Binding & Visualisasi `DataGridView`: Array 2D, `List(Of T)` Objek, `System.Data.DataTable`, `BindingSource`, & Pencarian Dinamis. | Selesai | 📖 [Dokumentasi Pertemuan 8](./DataMahasiswa/README.md) |
 
 ---
 
@@ -65,7 +68,7 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
   - $\le \text{Rp } 100.000.000 \longrightarrow 20\%$
   - $> \text{Rp } 100.000.000 \longrightarrow 30\%$
 
-### 📌 6. Pertemuan 6 — Integrasi Database PostgreSQL
+### 📌 7. Pertemuan 6 — Integrasi Database PostgreSQL
 - **Konfigurasi JSON**: Pembacaan Connection String secara eksternal melalui `appsettings.json` dan `ConfigurationBuilder`.
 - **Driver Database**: Menggunakan Npgsql ADO.NET Data Provider untuk PostgreSQL / Supabase.
 - **Modular Data Architecture**:
@@ -73,6 +76,26 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
   - `ModFunction`: Helper generic `AmbilData` (`DataTable`) dan `EksekusiData` (*Parameterized Query*).
   - `ModQuery`: Abstraksi query bisnis (`TambahData` & `TampilkanData`).
 - **Penyajian Data**: Menampilkan hasil query `SELECT` pada kontrol `DataGridView` (`dgvMahasiswa.DataSource`).
+
+### 📌 8. Pertemuan 7 — Validasi Input, ErrorProvider, & Konversi Tipe Data
+- **Validasi Input & ErrorProvider**: Validasi nama, NIM (9 digit angka unik), jurusan, tahun angkatan, dan IPK desimal (0.00 s.d. 4.00) dengan indikator visual `ErrorProvider`.
+- **Validasi On-The-Fly**: Event `Validating` pada field input untuk feedback langsung saat kehilangan fokus.
+- **Ekspor CSV**: Menyimpan rekap data ke file CSV menggunakan `StreamWriter` dan penanganan `IOException`.
+- **Komparasi Konversi & Exception**: Studi perbandingan `CInt()`, `Val()`, dan `Integer.TryParse()`, serta penanganan eksepsi bertingkat (`FormatException`, `OverflowException`, `DivideByZeroException`).
+
+### 📌 9. Tugas 2 (Pertemuan 7) — Aplikasi Peminjaman Buku Perpustakaan
+- **Validasi Pola Khusus**: Pola kode buku unik berformat prefix `BK` diikuti 4 digit angka (`BKxxxx`).
+- **Pencegahan Duplikasi**: Pengecekan status peminjaman aktif guna mencegah peminjaman ganda buku yang sama.
+- **Kalkulasi Jatuh Tempo**: Perhitungan otomatis tanggal pengembalian buku dari tanggal transaksi (`Date.Today.AddDays(lama)`).
+- **Ekspor Riwayat CSV**: Ekspor seluruh rekapitulasi data peminjaman ke format file `.csv`.
+
+### 📌 10. Pertemuan 8 — Data Binding & Visualisasi DataGridView
+- **Pola Objek POCO**: Entitas Class `Mahasiswa` dengan properti yang diikat secara otomatis ke kolom grid.
+- **Multi Data Source**:
+  - Pengisian manual sel dari Array 2 Dimensi.
+  - Pengikatan dinamis koleksi `List(Of Mahasiswa)` dengan penambahan data via `BindingSource.Add()`.
+  - Penggunaan `System.Data.DataTable` dengan filter ekspresi SQL (`LIKE`) real-time via `BindingSource.Filter`.
+- **Grid Styling & Formatting**: Pengaturan lebar kolom otomatis (`Fill`), perataan sel (`MiddleRight`, `MiddleCenter`), dan format angka desimal `N2`.
 
 ---
 
