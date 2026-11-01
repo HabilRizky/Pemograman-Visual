@@ -20,6 +20,7 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
 | **Pertemuan 07** | Form Pendaftaran Mahasiswa, Validasi Input Berlapis (`ErrorProvider`), Pencegahan Duplikasi, & Studi Komparasi Konversi Tipe Data. | Selesai | 📖 [Dokumentasi Pertemuan 7](./FormPendaftaran/README.md) |
 | **Tugas 02** | Aplikasi Peminjaman Buku Perpustakaan: Validasi Pola Kode Buku (`BKxxxx`), Cek Duplikasi Pinjam, Hitung Jatuh Tempo, & Ekspor CSV. | Selesai | 📖 [Dokumentasi Tugas 2](./PeminjamanBuku/README.md) |
 | **Pertemuan 08** | Data Binding & Visualisasi `DataGridView`: Array 2D, `List(Of T)` Objek, `System.Data.DataTable`, `BindingSource`, & Pencarian Dinamis. | Selesai | 📖 [Dokumentasi Pertemuan 8](./DataMahasiswa/README.md) |
+| **Tugas 03 (Pertemuan 08)** | Aplikasi Inventaris Buku Perpustakaan: Filter Multi-Kriteria (Teks, Kategori, Stok Habis), Sorting Dinamis, & Rekapitulasi Stok. | Selesai | 📖 [Dokumentasi Tugas Pertemuan 8](./InventarisBuku/README.md) |
 
 ---
 
@@ -96,6 +97,13 @@ Setiap folder proyek dilengkapi dengan dokumentasi `README.md` terpisah yang men
   - Pengikatan dinamis koleksi `List(Of Mahasiswa)` dengan penambahan data via `BindingSource.Add()`.
   - Penggunaan `System.Data.DataTable` dengan filter ekspresi SQL (`LIKE`) real-time via `BindingSource.Filter`.
 - **Grid Styling & Formatting**: Pengaturan lebar kolom otomatis (`Fill`), perataan sel (`MiddleRight`, `MiddleCenter`), dan format angka desimal `N2`.
+
+### 📌 11. Tugas Pertemuan 8 — Aplikasi Pengelolaan Inventaris Buku Perpustakaan
+- **Struktur Data Table**: Pemodelan koleksi buku dengan `DataTable` (`KodeBuku`, `Judul`, `Penulis`, `Kategori`, `Tahun`, `Stok`).
+- **Penyaringan Multi-Kriteria (Multi-Condition Filter)**: Menggabungkan pencarian teks judul/penulis, filter dropdown kategori, dan filter checkbox stok habis (`Stok = 0`) dengan operator logika `AND`.
+- **Pengurutan Dinamis (*Sorting*)**: Pengurutan tampilan data secara alfabetis maupun numerik via properti `BindingSource.Sort`.
+- **Sanitasi Filter**: Menangkal error parsing ekspresi filter terhadap karakter spesial via modul helper `ModPencarian`.
+- **Kalkulasi Real-Time**: Perhitungan otomatis jumlah buku yang tampil dan total stok fisik yang tersedia.
 
 ---
 

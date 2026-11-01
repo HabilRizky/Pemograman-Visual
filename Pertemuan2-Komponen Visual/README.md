@@ -1,12 +1,13 @@
 # Pertemuan 2 — Komponen Visual & Event Handling (Profile Mahasiswa)
 
-Proyek ini merupakan aplikasi **Windows Forms** sederhana untuk menginput dan mengelola data dasar mahasiswa (Nama, NIM, KOM). Aplikasi ini mengenalkan penggunaan komponen kontrol visual dasar, manipulasi properti, serta penanganan event klik (*Event Handling*).
+Proyek ini merupakan aplikasi **Windows Forms (VB.NET)** sederhana untuk menginput dan mengelola data dasar mahasiswa (Nama, NIM, KOM). Proyek ini mengenalkan penggunaan komponen kontrol visual dasar, manipulasi properti kontrol, serta penanganan kejadian klik (*Event Handling*).
 
 ---
 
 ## 📁 Lokasi Proyek & File Utama
 - **Folder Proyek**: `Pertemuan2-Komponen Visual/`
 - **File Solusi**: `Pertemuan2-Komponen Visual.slnx`
+- **File Proyek**: `Pertemuan2-Komponen Visual.vbproj`
 - **File Kode Utama**: [`Form1.vb`](file:///v:/Pemograman-Visual/Pertemuan2-Komponen%20Visual/Form1.vb)
 
 ---
@@ -24,11 +25,60 @@ Proyek ini merupakan aplikasi **Windows Forms** sederhana untuk menginput dan me
 
 ---
 
-## 💻 Penjelasan Kode (`Form1.vb`)
+## 💻 Seluruh Kode Program (Full Code) & Penjelasan Lengkap
 
-Berikut adalah penjelasan lengkap mengenai logika pemrograman yang diimplementasikan pada file [`Form1.vb`](file:///v:/Pemograman-Visual/Pertemuan2-Komponen%20Visual/Form1.vb):
+### Full Code [`Form1.vb`](file:///v:/Pemograman-Visual/Pertemuan2-Komponen%20Visual/Form1.vb)
 
-### 1. Menampilkan Data Inputan (`btnTampilkan_Click`)
+Berikut adalah kode sumber lengkap dari file `Form1.vb`:
+
+```vb
+Public Class Form1
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles txtNama.TextChanged
+
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub btnTampilkan_Click(sender As Object, e As EventArgs) Handles btnTampilkan.Click
+        MessageBox.Show("Halo Selamat Datang ! " & vbCrLf &
+                        "Nama: " & txtNama.Text & vbCrLf &
+                        "NIM: " & txtNIM.Text & vbCrLf &
+                        "KOM: " & txtKOM.Text
+        )
+    End Sub
+
+    Private Sub txtHapus_Click(sender As Object, e As EventArgs) Handles txtHapus.Click
+        txtNama.Clear()
+        txtNIM.Clear()
+        txtKOM.Clear()
+    End Sub
+
+    Private Sub btnKeluar_Click(sender As Object, e As EventArgs) Handles btnKeluar.Click
+        Me.Close()
+    End Sub
+End Class
+```
+
+---
+
+## 🔍 Penjelasan Detail Setiap Prosedur & Logika Kode
+
+### 1. Inisialisasi & Event Handler Kosong
+```vb
+Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles txtNama.TextChanged
+
+End Sub
+
+Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+End Sub
+```
+- **`Handles txtNama.TextChanged`**: Prosedur penanganan event bawaan yang tercipta saat melakukan *double-click* pada kontrol TextBox di designer. Prosedur ini dapat diisi dengan logika validasi dinamis setiap kali isi karakter di `txtNama` berubah.
+- **`Handles MyBase.Load`**: Prosedur yang dipicu saat form pertama kali dimuat ke dalam memori sebelum ditampilkan ke layar.
+
+### 2. Prosedur Menampilkan Data (`btnTampilkan_Click`)
 ```vb
 Private Sub btnTampilkan_Click(sender As Object, e As EventArgs) Handles btnTampilkan.Click
     MessageBox.Show("Halo Selamat Datang ! " & vbCrLf &
@@ -38,14 +88,13 @@ Private Sub btnTampilkan_Click(sender As Object, e As EventArgs) Handles btnTamp
     )
 End Sub
 ```
-- **`Handles btnTampilkan.Click`**: Menghubungkan eksekusi prosedur `Sub` secara otomatis ketika tombol `btnTampilkan` diklik oleh pengguna.
-- **`txtNama.Text`, `txtNIM.Text`, `txtKOM.Text`**: Mengambil nilai string dari properti `.Text` masing-masing kontrol `TextBox`.
-- **`&`**: Operator penggabungan string (*string concatenation*) di Visual Basic.
-- **`vbCrLf`**: Konstanta *Carriage Return + Line Feed* untuk membuat baris baru pada pesan dialog `MessageBox`.
+- **`Handles btnTampilkan.Click`**: Mengikat pemanggilan subrutin secara otomatis saat tombol `btnTampilkan` diklik oleh pengguna.
+- **`txtNama.Text`, `txtNIM.Text`, `txtKOM.Text`**: Membaca teks string yang tersimpan di dalam properti `.Text` masing-masing kontrol input.
+- **Operator `&`**: Operator penggabungan (*string concatenation*) standar pada bahasa Visual Basic.
+- **`vbCrLf`**: Konstanta bawaan (*Carriage Return + Line Feed*) untuk menyisipkan baris baru (enter) pada dialog pop-up.
+- **`MessageBox.Show(...)`**: Menampilkan kotak dialog modal (*pop-up dialog box*) yang berisi informasi data profil mahasiswa.
 
----
-
-### 2. Mengosongkan Inputan (`txtHapus_Click`)
+### 3. Prosedur Membersihkan Input (`txtHapus_Click`)
 ```vb
 Private Sub txtHapus_Click(sender As Object, e As EventArgs) Handles txtHapus.Click
     txtNama.Clear()
@@ -53,22 +102,23 @@ Private Sub txtHapus_Click(sender As Object, e As EventArgs) Handles txtHapus.Cl
     txtKOM.Clear()
 End Sub
 ```
-- **`.Clear()`**: Method bawaan `TextBox` untuk mengosongkan seluruh karakter yang diketik di dalam box.
+- **`.Clear()`**: Method bawaan kelas `TextBoxBase` untuk menghapus seluruh teks dari kontrol TextBox dan menyetel properti `.Text` kembali menjadi string kosong (`""`).
 
----
-
-### 3. Menutup Aplikasi (`btnKeluar_Click`)
+### 4. Prosedur Keluar dari Aplikasi (`btnKeluar_Click`)
 ```vb
 Private Sub btnKeluar_Click(sender As Object, e As EventArgs) Handles btnKeluar.Click
     Me.Close()
 End Sub
 ```
-- **`Me`**: Kata kunci yang merujuk pada instance Form utama yang sedang aktif.
-- **`Me.Close()`**: Menutup form dan mengakhiri sesi aplikasi Windows Forms.
+- **`Me`**: Kata kunci referensi yang menunjuk pada instance Form yang sedang aktif.
+- **`Me.Close()`**: Menutup jendela form dan membebaskan resource yang digunakan oleh aplikasi.
 
 ---
 
 ## 🚀 Cara Menjalankan Proyek
-1. Buka file `Pertemuan2-Komponen Visual.slnx` di Visual Studio 2022.
-2. Tekan **F5** untuk menjalankan program.
-3. Ketikkan Nama, NIM, dan KOM pada kotak input, lalu klik tombol **Tampilkan** untuk melihat hasilnya di dialog box.
+1. Buka file solusi `Pertemuan2-Komponen Visual.slnx` menggunakan **Microsoft Visual Studio 2022**.
+2. Tekan tombol **F5** atau klik tombol **Start** untuk menjalankan program dalam mode *Debugging*.
+3. Isikan data pada kotak teks **Nama**, **NIM**, dan **KOM**.
+4. Klik tombol **Tampilkan** untuk memunculkan kotak dialog profil mahasiswa.
+5. Klik tombol **Hapus** untuk mengosongkan semua kolom input.
+6. Klik tombol **Keluar** untuk mengakhiri program.

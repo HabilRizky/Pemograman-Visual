@@ -1,12 +1,13 @@
 # Pertemuan 4 — Perulangan (Looping) & Deret Angka
 
-Proyek ini berfokus pada pengimplementasian struktur **Perulangan (`For...Next`)** dalam Visual Basic .NET serta penggunaan komponen **`ListBox`** untuk menampung deret data angka yang dihasilkan secara dinamis.
+Proyek ini berfokus pada pengimplementasian struktur **Perulangan (`For...Next`)** dalam Visual Basic .NET serta pemanfaatan komponen **`ListBox`** untuk menampung dan menampilkan deret data numerik yang dihasilkan secara dinamis berdasarkan batas awal dan batas akhir yang ditentukan pengguna.
 
 ---
 
 ## 📁 Lokasi Proyek & File Utama
 - **Folder Proyek**: `Pertemuan4-Perulangan/`
 - **File Solusi**: `Pertemuan4-Perulangan.slnx`
+- **File Proyek**: `Pertemuan4-Perulangan.vbproj`
 - **File Kode Utama**: [`FormPerulangan.vb`](file:///v:/Pemograman-Visual/Pertemuan4-Perulangan/Pertemuan4-Perulangan/FormPerulangan.vb)
 
 ---
@@ -15,18 +16,63 @@ Proyek ini berfokus pada pengimplementasian struktur **Perulangan (`For...Next`)
 
 | Nama Kontrol | Tipe Kontrol | Fungsi / Peranan |
 | :--- | :--- | :--- |
-| `txtNilaiAwal` | `TextBox` | Menerima batas nilai awal perulangan |
-| `txtNilaiAkhir` | `TextBox` | Menerima batas nilai akhir perulangan |
-| `btnInput` | `Button` | Memproses pencetakan deret angka ke dalam ListBox |
-| `lstHasil` | `ListBox` | Menampilkan seluruh deret angka hasil iterasi |
+| `txtNilaiAwal` | `TextBox` | Menerima masukan batas nilai awal perulangan |
+| `txtNilaiAkhir` | `TextBox` | Menerima masukan batas nilai akhir perulangan |
+| `btnInput` | `Button` | Memproses logika perulangan dan mencetak deret ke ListBox |
+| `lstHasil` | `ListBox` | Wadah visual untuk menampilkan seluruh deret angka hasil iterasi |
 
 ---
 
-## 💻 Penjelasan Kode (`FormPerulangan.vb`)
+## 💻 Seluruh Kode Program (Full Code) & Penjelasan Lengkap
 
-Berikut adalah pembahasan detail mengenai logika kode di file [`FormPerulangan.vb`](file:///v:/Pemograman-Visual/Pertemuan4-Perulangan/Pertemuan4-Perulangan/FormPerulangan.vb):
+### Full Code [`FormPerulangan.vb`](file:///v:/Pemograman-Visual/Pertemuan4-Perulangan/Pertemuan4-Perulangan/FormPerulangan.vb)
 
-### 1. Pembatasan Input Karakter (`txtNilaiAwal_KeyPress` & `txtNilaiAkhir_KeyPress`)
+Berikut adalah seluruh kode program dari file `FormPerulangan.vb`:
+
+```vb
+Public Class FormPerulangan
+    Private Sub txtNilaiAwal_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNilaiAwal.KeyPress
+        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub txtNilaiAkhir_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNilaiAkhir.KeyPress
+        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub btnInput_Click(sender As Object, e As EventArgs) Handles btnInput.Click
+        Dim nilaiAwal As Integer
+        Dim nilaiAkhir As Integer
+
+        If Not Integer.TryParse(txtNilaiAwal.Text, nilaiAwal) Then
+            MessageBox.Show("Masukkan Dalam Bentuk Angka.")
+            txtNilaiAwal.Focus()
+            Return
+        End If
+
+        If Not Integer.TryParse(txtNilaiAkhir.Text, nilaiAkhir) Then
+            MessageBox.Show("Masukkan Dalam Bentuk Angka.")
+            txtNilaiAkhir.Focus()
+            Return
+        End If
+
+        lstHasil.Items.Clear()
+
+        For i As Integer = nilaiAwal To nilaiAkhir
+            lstHasil.Items.Add(i)
+        Next
+    End Sub
+End Class
+```
+
+---
+
+## 🔍 Penjelasan Rinci Setiap Prosedur & Logika Kode
+
+### 1. Pembatasan Input Karakter Numerik (`txtNilaiAwal_KeyPress` & `txtNilaiAkhir_KeyPress`)
 ```vb
 Private Sub txtNilaiAwal_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNilaiAwal.KeyPress
     If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
@@ -40,11 +86,13 @@ Private Sub txtNilaiAkhir_KeyPress(sender As Object, e As KeyPressEventArgs) Han
     End If
 End Sub
 ```
-- Kedua handler event ini memastikan bahwa pengguna **hanya dapat memasukkan angka positif** dan tombol navigasi/hapus (`Backspace`). Karakter huruf atau simbol akan langsung ditolak oleh event `KeyPress`.
+- Kedua event handler ini memastikan bahwa pengguna **hanya dapat mengetikkan karakter digit angka (`0-9`)** dan tombol kontrol editing (`Backspace`).
+- **`AndAlso`**: Operator evaluasi hubungan sirkuit pendek (*short-circuiting logic*). Jika `Not Char.IsControl(e.KeyChar)` bernilai `False` (berarti tombol tersebut adalah tombol kontrol seperti backspace), maka pemeriksaan kedua dilewati.
+- Karakter huruf atau simbol apa pun akan ditolak sebelum sempat tampil di layar melalui `e.Handled = True`.
 
 ---
 
-### 2. Logika Iterasi & Menampilkan Ke ListBox (`btnInput_Click`)
+### 2. Logika Iterasi & Menampilkan Deret Angka ke ListBox (`btnInput_Click`)
 ```vb
 Private Sub btnInput_Click(sender As Object, e As EventArgs) Handles btnInput.Click
     Dim nilaiAwal As Integer
@@ -64,7 +112,7 @@ Private Sub btnInput_Click(sender As Object, e As EventArgs) Handles btnInput.Cl
         Return
     End If
 
-    ' Membersihkan item ListBox dari proses sebelumnya
+    ' Mengosongkan ListBox sebelum proses cetak baru
     lstHasil.Items.Clear()
 
     ' Struktur Perulangan For...Next
@@ -75,16 +123,21 @@ End Sub
 ```
 
 #### Rincian Logika:
-1. **`Integer.TryParse`**: Mengonversi teks input dari `txtNilaiAwal` dan `txtNilaiAkhir` menjadi variabel numerik `nilaiAwal` dan `nilaiAkhir`.
-2. **`lstHasil.Items.Clear()`**: Mengosongkan tampilan deret sebelumnya dari `ListBox` sebelum deret baru dicetak.
-3. **`For i As Integer = nilaiAwal To nilaiAkhir`**:
-   - Memulai variabel penghitung `i` dari nilai `nilaiAwal`.
-   - Mengiterasi secara berurutan (*step 1*) hingga mencapai `nilaiAkhir`.
-4. **`lstHasil.Items.Add(i)`**: Menambahkan nilai `i` pada setiap putaran perulangan sebagai satu item baru di dalam kontrol `ListBox`.
+1. **Konversi String ke Numerik Aman (`Integer.TryParse`)**:
+   - Memeriksa apakah teks pada `txtNilaiAwal` dan `txtNilaiAkhir` dapat diubah menjadi integer.
+   - Jika pengguna membiarkan kotak teks kosong atau menyalin teks tidak valid, dialog peringatan akan muncul dan eksekusi dihentikan via `Return`.
+2. **Pembersihan Kontainer ListBox (`lstHasil.Items.Clear()`)**:
+   - Mengosongkan seluruh item yang telah ada di dalam `ListBox` dari iterasi sebelumnya sehingga hasil pencetakan tidak bertumpuk.
+3. **Struktur Perulangan `For i As Integer = nilaiAwal To nilaiAkhir`**:
+   - Mendeklarasikan variabel counter lokal `i` bertipe `Integer`.
+   - Mengiterasi secara otomatis dari nilai `nilaiAwal` hingga mencapai `nilaiAkhir` dengan pertambahan default $+1$ pada setiap putaran (*step 1*).
+4. **Pencetakan Item (`lstHasil.Items.Add(i)`)**:
+   - Memasukkan nilai counter `i` pada setiap putaran perulangan sebagai satu baris item baru ke dalam koleksi kontrol `ListBox`.
 
 ---
 
 ## 🚀 Cara Menjalankan Proyek
-1. Buka `Pertemuan4-Perulangan.slnx` di Visual Studio 2022.
-2. Jalankan aplikasi (F5).
-3. Masukkan Nilai Awal (misal `1`) dan Nilai Akhir (misal `10`), lalu klik tombol **Input**. Deret angka 1 sampai 10 akan ditampilkan secara berurutan pada `ListBox`.
+1. Buka file solusi `Pertemuan4-Perulangan.slnx` menggunakan **Microsoft Visual Studio 2022**.
+2. Tekan tombol **F5** untuk memulai eksekusi.
+3. Masukkan Nilai Awal (misal: `1`) dan Nilai Akhir (misal: `20`).
+4. Klik tombol **Input**. Deret bilangan dari 1 hingga 20 akan otomatis tercetak berurutan di dalam kontrol `ListBox`.

@@ -1,17 +1,18 @@
 # Pertemuan 6 — Integrasi Database PostgreSQL (Npgsql) & CRUD Data Mahasiswa
 
-Proyek ini berfokus pada integrasi aplikasi **Windows Forms (VB.NET)** dengan database relational **PostgreSQL** (misalnya Supabase PostgreSQL) menggunakan driver **Npgsql**, konfigurasi berbasis file `appsettings.json`, arsitektur kode modular, serta pengisian data secara interaktif melalui kontrol **`DataGridView`**.
+Proyek ini berfokus pada integrasi aplikasi **Windows Forms (VB.NET)** dengan database relasional **PostgreSQL** (misalnya Supabase Cloud Database) menggunakan driver ADO.NET **Npgsql**, konfigurasi koneksi berbasis file eksternal `appsettings.json`, arsitektur kode modular berlapis (*Layered Architecture*), serta visualisasi data secara interaktif melalui kontrol **`DataGridView`**.
 
 ---
 
 ## 📁 Lokasi Proyek & File Utama
 - **Folder Proyek**: `Pertemuan6-database/`
 - **File Solusi**: `Pertemuan6-database.slnx`
+- **File Proyek**: `Pertemuan6-database.vbproj`
 - **File Konfigurasi**: [`appsettings.json`](file:///v:/Pemograman-Visual/Pertemuan6-database/appsettings.json)
 - **Modul Koneksi**: [`ModDatabase.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/ModDatabase.vb)
-- **Modul Helper Data**: [`ModFunction.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/ModFunction.vb)
-- **Modul Query SQL**: [`ModQuery.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/ModQuery.vb)
-- **Form Utama**: [`FormMahasiswa.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/FormMahasiswa.vb)
+- **Modul Helper Generic Data**: [`ModFunction.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/ModFunction.vb)
+- **Modul Query SQL Spesifik**: [`ModQuery.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/ModQuery.vb)
+- **Form Antarmuka Utama**: [`FormMahasiswa.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/FormMahasiswa.vb)
 
 ---
 
@@ -19,32 +20,32 @@ Proyek ini berfokus pada integrasi aplikasi **Windows Forms (VB.NET)** dengan da
 
 | Nama Kontrol | Tipe Kontrol | Fungsi / Peranan |
 | :--- | :--- | :--- |
-| `dgvMahasiswa` | `DataGridView` | Menampilkan seluruh data tabel mahasiswa dari database |
-| `txtNama` | `TextBox` | Menerima input Nama Mahasiswa (Validasi khusus huruf) |
-| `txtNim` | `TextBox` | Menerima input NIM Mahasiswa (Validasi khusus angka) |
-| `txtJurusan` | `TextBox` | Menerima input Jurusan Mahasiswa |
-| `btnTambah` | `Button` | Memproses penyimpanan data baru ke database PostgreSQL |
-| `btnTampilkan` | `Button` | Memuat & menyegarkan (*refresh*) data pada DataGridView |
+| `dgvMahasiswa` | `DataGridView` | Menampilkan seluruh data tabel mahasiswa dari database PostgreSQL |
+| `txtNama` | `TextBox` | Menerima input Nama Mahasiswa (Validasi: hanya huruf) |
+| `txtNim` | `TextBox` | Menerima input NIM Mahasiswa (Validasi: hanya angka) |
+| `txtJurusan` | `TextBox` | Menerima input Program Studi / Jurusan |
+| `btnTambah` | `Button` | Menyimpan data mahasiswa baru ke tabel database PostgreSQL |
+| `btnTampilkan` | `Button` | Mengambil data terbaru dari database dan memuatnya ke DataGridView |
 
 ---
 
-## 🏗️ Arsitektur Kode & Penjelasan Detail
+## 💻 Seluruh Kode Program (Full Code) & Penjelasan Lengkap
 
-Arsitektur aplikasi ini menerapkan pola **Modular Abstraction** untuk memisahkan tanggung jawab antara *User Interface (UI)*, *Query Execution*, *Database Helper*, dan *Configuration Management*.
+### 1. File Konfigurasi ([`appsettings.json`](file:///v:/Pemograman-Visual/Pertemuan6-database/appsettings.json))
 
-### 1. Konfigurasi Connection String (`appsettings.json` & `ModDatabase.vb`)
-Connection string database disimpan secara terpisah pada file JSON untuk menjaga kemudahan konfigurasi tanpa perlu melakukan re-compile aplikasi.
-
-**`appsettings.json`**:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=<HOST>;Port=5432;Database=postgres;Username=<USER>;Password=<PASSWORD>;SSL Mode=Require;Trust Server Certificate=true"
+    "DefaultConnection": "Host=aws-0-ap-southeast-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.vpdkszzruhsekcpbstpm;Password=HabilRizky12;SSL Mode=Require;Trust Server Certificate=true"
   }
 }
 ```
+- **Penjelasan**: Connection string dipisahkan dari kode sumber VB.NET. File ini dibaca saat runtime sehingga parameter server, nama database, dan kredensial dapat diganti tanpa perlu melakukan compile ulang proyek.
 
-**`ModDatabase.vb`**:
+---
+
+### 2. Modul Koneksi Database ([`ModDatabase.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/ModDatabase.vb))
+
 ```vb
 Imports Microsoft.Extensions.Configuration
 Imports Npgsql
@@ -59,11 +60,11 @@ Module ModDatabase
 
         Return config.GetConnectionString("DefaultConnection")
     End Function
-
     Public Sub DatabaseKoneksi()
         Try
-            Using conn As New NpgsqlConnection(GetConnectionString())
+            Using conn As New NpgsqlConnection(GetConnectionString)
                 conn.Open()
+
                 MessageBox.Show("Koneksi database berhasil")
             End Using
         Catch ex As Exception
@@ -72,22 +73,22 @@ Module ModDatabase
     End Sub
 End Module
 ```
-- **`ConfigurationBuilder`**: Membaca file `appsettings.json` dari folder output `BaseDirectory`.
-- **`NpgsqlConnection`**: Mengelola pembukaan koneksi ke database PostgreSQL secara aman menggunakan pola `Using...End Using`.
+- **Penjelasan**:
+  - `ConfigurationBuilder`: Menggunakan paket `Microsoft.Extensions.Configuration.Json` untuk membaca file `appsettings.json` di direktori aplikasi (`AppContext.BaseDirectory`).
+  - `DatabaseKoneksi`: Prosedur uji coba koneksi menggunakan `NpgsqlConnection` dengan blok `Using...End Using` yang menjamin koneksi ditutup dan dibersihkan secara otomatis (*Dispose*).
 
 ---
 
-### 2. General Helper Function (`ModFunction.vb`)
-Menyediakan fungsi umum untuk mengeksekusi query `SELECT` maupun query manipulasi data (`INSERT`/`UPDATE`/`DELETE`) dengan *Parameterized Queries* guna mencegah ancaman **SQL Injection**.
+### 3. Modul Helper Generic Data ([`ModFunction.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/ModFunction.vb))
 
 ```vb
 Imports Npgsql
 Imports System.Data
-
 Module ModFunction
-    ' Membaca Data (SELECT) dan mengembalikan DataTable
+
     Public Function AmbilData(query As String) As DataTable
         Dim dt As New DataTable
+
         Try
             Using conn As New NpgsqlConnection(ModDatabase.GetConnectionString())
                 conn.Open()
@@ -100,14 +101,14 @@ Module ModFunction
         Catch ex As Exception
             MessageBox.Show("Gagal mengambil data" & vbCrLf & ex.Message, " database")
         End Try
+
         Return dt
     End Function
-
-    ' Eksekusi Query Non-Query (INSERT/UPDATE/DELETE) dengan Parameter
     Public Function EksekusiData(query As String, parameters As Dictionary(Of String, Object)) As Boolean
         Try
             Using conn As New NpgsqlConnection(ModDatabase.GetConnectionString())
                 conn.Open()
+
                 Using cmd As New NpgsqlCommand(query, conn)
                     For Each parameter In parameters
                         cmd.Parameters.AddWithValue(parameter.Key, parameter.Value)
@@ -117,23 +118,32 @@ Module ModFunction
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("Gagal mengeksekusi data:" & vbCrLf & ex.Message, "Error Database")
+            MessageBox.Show(
+            "Gagal mengeksekusi data:" & vbCrLf & ex.Message,
+            "Error Database"
+        )
             Return False
         End Try
     End Function
+
 End Module
 ```
+- **Penjelasan**:
+  - **`AmbilData(query As String) As DataTable`**: Mengeksekusi query pembacaan data (`SELECT`) menggunakan `NpgsqlDataAdapter` dan mengisi hasilnya ke dalam objek `DataTable` dalam memori.
+  - **`EksekusiData(query, parameters) As Boolean`**: Mengeksekusi query manipulasi (`INSERT`, `UPDATE`, `DELETE`) secara aman menggunakan **Parameterized Queries** (`AddWithValue`) untuk menangkal celah keamanan **SQL Injection**.
 
 ---
 
-### 3. Layer Query Spesifik (`ModQuery.vb`)
-Menampung logika query spesifik untuk entitas `Mahasiswa`.
+### 4. Modul Query SQL Spesifik ([`ModQuery.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/ModQuery.vb))
 
 ```vb
 Imports System.Data
-
 Module ModQuery
-    Public Function TambahData(nim As String, nama As String, jurusan As String) As Boolean
+    Public Function TambahData(
+        nim As String,
+        nama As String,
+        jurusan As String
+    ) As Boolean
         Dim query As String =
             "INSERT INTO mahasiswa (nim, nama, jurusan) " &
             "VALUES (@nim, @nama, @jurusan)"
@@ -147,27 +157,35 @@ Module ModQuery
     End Function
 
     Public Function TampilkanData() As DataTable
-        Return ModFunction.AmbilData("SELECT * FROM mahasiswa ORDER BY id ASC")
+        Return ModFunction.AmbilData(
+            "SELECT * FROM mahasiswa ORDER BY id ASC"
+        )
     End Function
+
 End Module
 ```
+- **Penjelasan**: Membungkus logika SQL khusus entitas `mahasiswa`:
+  - `TambahData`: Menyiapkan query `INSERT` dengan placeholder parameter `@nim`, `@nama`, `@jurusan` yang dipetakan ke dalam `Dictionary(Of String, Object)`.
+  - `TampilkanData`: Memanggil query `SELECT * FROM mahasiswa ORDER BY id ASC` dan mengembalikan objek `DataTable`.
 
 ---
 
-### 4. User Interface Logic (`FormMahasiswa.vb`)
-Form mengelola validasi input keyboard serta pemanggilan layer query.
+### 5. Form Antarmuka Mahasiswa ([`FormMahasiswa.vb`](file:///v:/Pemograman-Visual/Pertemuan6-database/FormMahasiswa.vb))
 
 ```vb
 Public Class FormMahasiswa
-    ' Menampilkan Data ke DataGridView
     Private Sub btnTest_Click(sender As Object, e As EventArgs) Handles btnTampilkan.Click
         dgvMahasiswa.AutoGenerateColumns = True
         dgvMahasiswa.DataSource = ModQuery.TampilkanData()
     End Sub
 
-    ' Menambah Data Mahasiswa Baru
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnTambah.Click
-        If ModQuery.TambahData(txtNim.Text, txtNama.Text, txtJurusan.Text) Then
+        If ModQuery.TambahData(
+            txtNim.Text,
+            txtNama.Text,
+            txtJurusan.Text
+        ) Then
+
             MessageBox.Show("Data berhasil disimpan")
         End If
 
@@ -176,35 +194,43 @@ Public Class FormMahasiswa
         txtNim.Clear()
     End Sub
 
-    ' Validasi Nama: Hanya Huruf dan Tombol Kontrol
     Private Sub txtNama_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNama.KeyPress
         If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsLetter(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub
 
-    ' Validasi NIM: Hanya Angka dan Tombol Kontrol
     Private Sub txtNIM_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtNim.KeyPress
         If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
             e.Handled = True
         End If
     End Sub
+
 End Class
+```
+- **Penjelasan**:
+  - `btnTampilkan.Click`: Mengatur `AutoGenerateColumns = True` dan langsung mengikat hasil `ModQuery.TampilkanData()` ke `dgvMahasiswa.DataSource`.
+  - `btnTambah.Click`: Mengirimkan teks isian form ke `ModQuery.TambahData()`. Jika bernilai `True`, muncul notifikasi sukses dan seluruh kotak teks dibersihkan.
+  - `txtNama.KeyPress` & `txtNim.KeyPress`: Membatasi nama hanya alfabet huruf dan NIM hanya numerik angka.
+
+---
+
+## 🗄️ Prasyarat Skema Database PostgreSQL
+Sebelum menjalankan aplikasi, buat tabel pada PostgreSQL / Supabase Anda:
+```sql
+CREATE TABLE mahasiswa (
+    id SERIAL PRIMARY KEY,
+    nim VARCHAR(20) NOT NULL,
+    nama VARCHAR(100) NOT NULL,
+    jurusan VARCHAR(50) NOT NULL
+);
 ```
 
 ---
 
 ## 🚀 Cara Menjalankan Proyek
-1. **Prasyarat Database**: Pastikan tabel `mahasiswa` sudah dibuat pada PostgreSQL dengan struktur:
-   ```sql
-   CREATE TABLE mahasiswa (
-       id SERIAL PRIMARY KEY,
-       nim VARCHAR(20) NOT NULL,
-       nama VARCHAR(100) NOT NULL,
-       jurusan VARCHAR(50) NOT NULL
-   );
-   ```
-2. **Koneksi Database**: Sesuaikan connection string pada file `appsettings.json`.
-3. Buka `Pertemuan6-database.slnx` / `.sln` pada **Visual Studio 2022**.
-4. Tekan **F5** untuk me-run aplikasi.
-5. Klik **Tampilkan** untuk memuat data awal ke DataGridView, atau isikan **Nama**, **NIM**, dan **Jurusan** lalu klik **Tambah** untuk memasukkan data baru.
+1. Buka solusi `Pertemuan6-database.slnx` pada **Visual Studio 2022**.
+2. Pastikan file `appsettings.json` telah dikonfigurasi dengan host, user, dan password database PostgreSQL Anda.
+3. Tekan **F5** untuk me-run aplikasi.
+4. Klik **Tampilkan** untuk memuat data tabel mahasiswa ke `DataGridView`.
+5. Masukkan **Nama**, **NIM**, dan **Jurusan**, lalu klik tombol **Tambah** untuk menyimpan data ke database.
